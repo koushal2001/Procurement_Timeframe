@@ -3,6 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const { spawn } = require("child_process");
 
+var cors = require('cors')
+
+app.use(cors()) // Use this after the variable declaration
+
 app.use(bodyParser.json())
 
 app.post("/model",(req,res)=>{
@@ -17,7 +21,7 @@ app.post("/model",(req,res)=>{
     IS_PAC = req.body.IS_PAC;
     input_data = [EST_COST ,MODEOFTENDER , METHOD_OF_PURCHASE,FINANCIAL_POWER_CODE, CFA_CODE,CONCURRENCE_BY, BUDGET_HEAD_CODE , IS_PAC]
    
-    const python = spawn("python3", ["./input.py", input_data ],{ shell: true });
+    const python = spawn("python", ["./input.py", input_data ],{ shell: true });
     
     var processed_data;
     python.stdout.on("data", function (data) {
